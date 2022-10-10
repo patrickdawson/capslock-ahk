@@ -11,7 +11,6 @@
 ;Summary:                                                             |
 ;o----------------------o---------------------------------------------o
 ;|CapsLock;             | {ESC}  Especially Convient for vim user     |
-;|CaspLock + `          | {CapsLock}CapsLock Switcher as a Substituent|
 ;|CapsLock + hjklwb     | Vim-Style Cursor Mover                      |
 ;|CaspLock + nm,.       | Convient Delete Controller                  |
 ;|CapsLock + zxcvay     | Windows-Style Editor                        |
@@ -27,22 +26,6 @@
 ;                       CapsLock Initializer                         ;|
 ;---------------------------------------------------------------------o
 SetCapsLockState, AlwaysOff                                          ;|
-;---------------------------------------------------------------------o
-
-
-;=====================================================================o
-;                       CapsLock Switcher:                           ;|
-;---------------------------------o-----------------------------------o
-;                    CapsLock + ` | {CapsLock}                       ;|
-;---------------------------------o-----------------------------------o
-CapsLock & `::                                                       ;|
-GetKeyState, CapsLockState, CapsLock, T                              ;|
-if CapsLockState = D                                                 ;|
-    SetCapsLockState, AlwaysOff                                      ;|
-else                                                                 ;|
-    SetCapsLockState, AlwaysOn                                       ;|
-KeyWait, ``                                                          ;|
-return                                                               ;|
 ;---------------------------------------------------------------------o
 
 
@@ -174,6 +157,29 @@ return                                                               ;|
 
 
 ;=====================================================================o
+;                     CapsLock Home/End Navigator                    ;|
+;-----------------------------------o---------------------------------o
+;                      CapsLock + g |  Top of page                   ;|
+;                      CapsLock + G |  Bottom of page                ;|
+;-----------------------------------o---------------------------------o
+CapsLock & 0::                                                       ;|
+Send, {Home}                                                         ;|
+Return                                                               ;|
+;-----------------------------------o                                ;|
+CapsLock & $::                                                       ;|
+Send, {End}                                                          ;|
+Return                                                               ;|
+;-----------------------------------o                                ;|
+CapsLock & G::                                                       ;|
+if GetKeyState("alt") = 0                                            ;|
+    Send, ^{Home}                                                    ;|
+else                                                                 ;|
+    Send, ^{End}                                                     ;|
+return                                                               ;|
+;---------------------------------------------------------------------o
+
+
+;=====================================================================o
 ;                     CapsLock Mouse Controller                      ;|
 ;-----------------------------------o---------------------------------o
 ;                   CapsLock + Up   |  Mouse Up                      ;|
@@ -243,6 +249,5 @@ CapsLock & b:: Send, ^{Left}                                         ;|
 CapsLock & f:: Send, #+f                                             ;|
 CapsLock & e:: Run https://jira.zue.zwick.de/secure/RapidBoard.jspa?rapidView=1&quickFilter=77                               ;|
 CapsLock & r:: Run Powershell                                        ;|
-CapsLock & t:: Run C:\Program Files (x86)\Notepad++\notepad++.exe    ;|
 ;---------------------------------------------------------------------o
 
